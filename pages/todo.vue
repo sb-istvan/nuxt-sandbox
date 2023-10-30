@@ -2,26 +2,17 @@
 import { ref, computed } from 'vue'
 
 let id = 0
-
-const newTodo = ref('')
-const hideCompleted = ref(false)
-const sorted = ref(false)
 const todos = ref([
   { id: id++, text: 'Learn HTML', done: true },
   { id: id++, text: 'Learn JavaScript', done: true },
   { id: id++, text: 'Learn Vue', done: false },
-  { id: id++, text: 'Learn to learn', done: false },
+  { id: id++, text: 'Rest', done: false },
+  { id: id++, text: 'Hello World!', done: true },
 ])
 
-const sortedFilteredTodos = computed(() => {
-  if (hideCompleted.value && sorted.value) {
-    return todos.value.filter((todo) => !todo.done).sort((a, b) => (a.text > b.text ? 1 : -1))
-  } else if (sorted.value) {
-    return todos.value.sort((a, b) => (a.text > b.text ? 1 : -1))
-  } else {
-    return todos.value
-  }
-})
+const newTodo = ref('')
+const hideCompleted = ref(false)
+const sorted = ref(false)
 
 function addTodo() {
   todos.value.push({ id: id++, text: newTodo.value, done: false })
@@ -31,6 +22,14 @@ function addTodo() {
 function removeTodo(todo) {
   todos.value = todos.value.filter((t) => t !== todo)
 }
+
+const sortedFilteredTodos = computed(() => {
+  if (hideCompleted.value) {
+    return sorted.value ? todos.value.filter((todo) => !todo.done).sort((a, b) => (a.text > b.text ? 1 : -1)) : todos.value.filter((todo) => !todo.done)
+  } else {
+    return sorted.value ? [...todos.value].sort((a, b) => (a.text > b.text ? 1 : -1)) : todos.value
+  }
+})
 </script>
 
 <template>
@@ -47,7 +46,7 @@ function removeTodo(todo) {
     <li v-for="todo in sortedFilteredTodos" :key="todo.id">
       <input type="checkbox" v-model="todo.done">
       <span :class="{ done: todo.done }">{{ todo.text }}</span>
-      <button @click="removeTodo(todo)">X</button>
+      <button @click="removeTodo(todo)" class="removebutton">X</button>
     </li>
   </ul>
   <div class="button-group">
@@ -66,8 +65,16 @@ ul.todos {
   padding-left: 0rem;
 }
 
+li {
+  padding-block: .25rem;
+}
+
 .done {
   text-decoration: line-through;
+}
+
+.removebutton {
+  margin-left: .5rem;
 }
 
 .button-group {

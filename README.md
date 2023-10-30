@@ -12,6 +12,7 @@ This is my place to learn Vue and Nuxt. It is basically a collection of simple e
 **2023-10-30**
 
 - Using Nuxt pages directory
+- Added sorting function to Todo List - no actual use in real life, just wanted to see the way to implement this
 - Added "Essentials" page with various experiments with Vue
 
 **2023-10-12**

@@ -33,6 +33,10 @@ const borderBlueDotted = {
                     Clicked {{ count }} times
                 </button>
             </label>
+            <div v-if="count > 3">
+                <p>More than 3 clicks!</p>
+                <button @click="count = 0">Reset count</button>
+            </div>
         </section>
     </div>
 </template>
