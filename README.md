@@ -1,75 +1,19 @@
-# Nuxt 3 Minimal Starter
+# Nuxt Playground
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+This is my place to learn Vue and Nuxt. It is basically a collection of simple example snippets to experiment with the possibilities.
 
 ## Setup
 
-Make sure to install the dependencies:
+1. Install dependencies: `npm install`
+2. Start development server: `npm run dev`
 
-```bash
-# npm
-npm install
+## Changelog
 
-# pnpm
-pnpm install
+**2023-10-30**
 
-# yarn
-yarn install
+- Using Nuxt pages directory
+- Added "Essentials" page with various experiments with Vue
 
-# bun
-bun install
-```
+**2023-10-12**
 
-## Development Server
-
-Start the development server on `http://localhost:3000`:
-
-```bash
-# npm
-npm run dev
-
-# pnpm
-pnpm run dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
-```
-
-## Production
-
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm run build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm run preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+- Initial release with a simple Todo List page.
