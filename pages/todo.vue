@@ -1,6 +1,4 @@
 <script setup>
-import { ref, computed } from 'vue'
-
 let id = 0
 const todos = ref([
   { id: id++, text: 'Learn HTML', done: true },
@@ -10,24 +8,27 @@ const todos = ref([
   { id: id++, text: 'Hello World!', done: true },
 ])
 
-const newTodo = ref('')
+const newTodoText = ref('')
 const hideCompleted = ref(false)
 const sorted = ref(false)
 
+const filteredSortedTodos = computed(() => todos.value.filter((todo) => !todo.done).sort((a, b) => (a.text > b.text ? 1 : -1)))
+const filteredTodos = computed(() => todos.value.filter((todo) => !todo.done))
+const sortedTodos = computed(() => [...todos.value].sort((a, b) => (a.text > b.text ? 1 : -1)))
+
+const anyTodoDone = computed(() => todos.value.filter((todo) => todo.done).length > 0)
+const anyTodoToSort = computed(() => hideCompleted.value ? filteredTodos.value.length > 1 : todos.value.length > 1)
+
 function addTodo() {
-  todos.value.push({ id: id++, text: newTodo.value, done: false })
-  newTodo.value = ''
+  todos.value.push({ id: id++, text: newTodoText.value, done: false })
+  newTodoText.value = ''
 }
 
-function removeTodo(todo) {
-  todos.value = todos.value.filter((t) => t !== todo)
-}
-
-const sortedFilteredTodos = computed(() => {
+const renderedTodos = computed(() => {
   if (hideCompleted.value) {
-    return sorted.value ? todos.value.filter((todo) => !todo.done).sort((a, b) => (a.text > b.text ? 1 : -1)) : todos.value.filter((todo) => !todo.done)
+    return sorted.value ? filteredSortedTodos.value : filteredTodos.value
   } else {
-    return sorted.value ? [...todos.value].sort((a, b) => (a.text > b.text ? 1 : -1)) : todos.value
+    return sorted.value ? sortedTodos.value : todos.value
   }
 })
 </script>
@@ -39,27 +40,28 @@ const sortedFilteredTodos = computed(() => {
   <h1>The Classic Todo List</h1>
   <p>Based on one of the Vue.js Tutorial examples.</p>
   <form @submit.prevent="addTodo">
-    <input v-model="newTodo">
+    <input v-model="newTodoText">
     <button>Add Todo</button>
   </form>
-  <ul class="todos">
-    <li v-for="todo in sortedFilteredTodos" :key="todo.id">
-      <input type="checkbox" v-model="todo.done">
-      <span :class="{ done: todo.done }">{{ todo.text }}</span>
-      <button @click="removeTodo(todo)" class="removebutton">X</button>
-    </li>
-  </ul>
   <div class="button-group">
-    <button @click="hideCompleted = !hideCompleted">
+    <button @click="hideCompleted = !hideCompleted" :disabled="!anyTodoDone">
       {{ hideCompleted ? 'Show all' : 'Hide completed' }}
     </button>
-    <button @click="sorted = !sorted">
+    <button @click="sorted = !sorted" :disabled="!anyTodoToSort">
       {{ sorted ? 'Unsort' : 'Sort' }}
     </button>
   </div>
+  <ul class="todos">
+    <TodoItem v-for="todo in renderedTodos" :key="todo.id" :text="todo.text" :done="todo.done"
+      @remove="todos = todos.filter((t) => t !== todo)" @done="todo.done = !todo.done" />
+  </ul>
 </template>
 
 <style>
+form {
+  padding-block: .5rem;
+}
+
 ul.todos {
   list-style-type: none;
   padding-left: 0rem;
@@ -74,11 +76,12 @@ li {
 }
 
 .removebutton {
-  margin-left: .5rem;
+  margin-left: .25rem;
 }
 
 .button-group {
   display: flex;
   gap: 1rem;
+  padding-block: .5rem;
 }
 </style>

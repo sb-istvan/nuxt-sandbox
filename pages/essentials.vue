@@ -13,6 +13,29 @@ const borderBlueDotted = {
     class: "border-blue-dotted",
     id: "second",
 }
+
+// third section
+const isActive = ref(true)
+const hasError = ref(false)
+const rectangleClasses = computed(() => ({
+    active: isActive.value,
+    error: hasError.value,
+    combined: isActive.value && hasError.value,
+}))
+
+// fouth section
+const cars = [
+    { model: "Volkswagen", type: "Passat" },
+    { model: "Renault", type: "Espace" },
+    { model: "Alfa Romeo", type: "Giulietta" }
+]
+
+const carObject = {
+    model: "Audi",
+    type: "A6 Avant",
+    color: "white",
+}
+
 </script>
 
 <template>
@@ -33,10 +56,30 @@ const borderBlueDotted = {
                     Clicked {{ count }} times
                 </button>
             </label>
-            <div v-if="count > 3">
-                <p>More than 3 clicks!</p>
-                <button @click="count = 0">Reset count</button>
+            <template v-if="count > 9">
+                <button @click="count = 0">Reset counter</button>
+            </template>
+            <template v-else-if="count > 3">
+                <p>Continue like this!</p>
+            </template>
+            <p v-else>Just keep clicking!</p>
+        </section>
+        <section id="third">
+            <div class="rectangle" :class="rectangleClasses"></div>
+            <div class="control">
+                <h3>Control</h3>
+                <label><input type="checkbox" v-model="isActive">active</label>
+                <label><input type="checkbox" v-model="hasError">error</label>
             </div>
+        </section>
+        <section id="fourth">
+            <h3>Time for v-for!</h3>
+            <ul class="cars">
+                <li v-for="({ model, type }, index) in cars">[{{ index }}] {{ model }} {{ type }}</li>
+            </ul>
+            <ul class="cars">
+                <li v-for="(value, key, index) in carObject">{{ index }} - {{ key }} - {{ value }}</li>
+            </ul>
         </section>
     </div>
 </template>
@@ -44,7 +87,9 @@ const borderBlueDotted = {
 <style>
 #examples {
     display: flex;
+    flex-wrap: wrap;
     gap: .5rem;
+    padding-block-start: .5rem;
 }
 
 section {
@@ -54,6 +99,7 @@ section {
     border: 2px solid black;
     padding: .5rem;
     border-radius: .5rem;
+    min-width: 12rem;
 }
 
 .blue {
@@ -68,5 +114,33 @@ section {
 
 .border-blue-dotted {
     border: 2px darkblue dotted;
+}
+
+#third {
+    display: flex;
+    flex-direction: row;
+}
+
+.rectangle {
+    width: 5rem;
+    height: 5rem;
+    background-color: lightgrey;
+}
+
+.control {
+    display: flex;
+    flex-direction: column;
+}
+
+.active {
+    background-color: darkgreen;
+}
+
+.error {
+    background-color: crimson;
+}
+
+.cars {
+    padding-left: 1rem;
 }
 </style>

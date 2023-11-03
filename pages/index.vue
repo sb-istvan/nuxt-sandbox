@@ -12,15 +12,28 @@
 
 * {
     box-sizing: border-box;
+    padding: 0rem;
+    margin: 0rem;
 }
 
 body {
     font-family: 'Cabin', sans-serif;
+    padding: .5rem;
+}
+
+h1,
+p {
+    padding-block: .25rem;
 }
 
 button,
 input {
     font-family: inherit;
     font-size: inherit;
+    padding-inline: .25rem;
+}
+
+input {
+    margin-right: .25rem;
 }
 </style>
