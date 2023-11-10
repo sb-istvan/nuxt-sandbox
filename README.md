@@ -9,7 +9,7 @@ This is my place to learn Vue and Nuxt. It is basically a collection of simple e
 
 ## Changelog
 
-**2023-11-09**
+**2023-11-10**
 
 - `/comps` New page for practicing working with components - things are getting interesting!
 - `<TodoItem />` component is refined
