@@ -1,12 +1,15 @@
 <script setup>
-defineProps(['text', 'done'])
-defineEmits(['remove', 'done'])
+const props = defineProps(['id', 'done'])
+const emits = defineEmits(['remove', 'done'])
+
 </script>
 
 <template>
-    <li>
-        <input type="checkbox" :checked="done" @click="$emit('done')">
-        <span :class="{ done }">{{ text }}</span>
-        <button class="removebutton" @click="$emit('remove')">⨯</button>
+    <li><input type="checkbox" :id="id" :checked="done" @click="emits('done')">
+        <label :for="id" :class="{ done }">
+            <slot />
+        </label>
+
+        <button class="removebutton" @click="emits('remove', id)">⨯</button>
     </li>
 </template>

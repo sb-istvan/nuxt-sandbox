@@ -9,6 +9,13 @@ This is my place to learn Vue and Nuxt. It is basically a collection of simple e
 
 ## Changelog
 
+**2023-11-09**
+
+- `/comps` New page for practicing working with components - things are getting interesting!
+- `<TodoItem />` component is refined
+- `/essentials` New section: Form input bindings
+- `/` Page list is now rendered from an array of objects.
+
 **2023-11-03**
 
 - `/todo` Todo items are now in a separate component `<TodoItem />`

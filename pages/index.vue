@@ -1,9 +1,25 @@
+<script setup>
+const pages = [
+    {
+        route: "todo",
+        text: "The Classic Todo List"
+    },
+    {
+        route: "essentials",
+        text: "Essentials from Vue.js Guide page"
+    },
+    {
+        route: "comps",
+        text: "Practicing components"
+    },
+]
+</script>
+
 <template>
     <h1>Nuxt Playground</h1>
     <p>Learning Vue.js and Nuxt by creating small example pages.</p>
     <ul>
-        <li><a href="todo">The Classic Todo List</a></li>
-        <li><a href="essentials">Essentials from Vue.js Guide page</a></li>
+        <li v-for="page in pages"><a :href="page.route">{{ page.text }}</a></li>
     </ul>
 </template>
 
@@ -27,7 +43,8 @@ p {
 }
 
 button,
-input {
+input,
+textarea {
     font-family: inherit;
     font-size: inherit;
     padding-inline: .25rem;

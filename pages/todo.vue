@@ -24,6 +24,10 @@ function addTodo() {
   newTodoText.value = ''
 }
 
+function removeTodoItem(id) {
+  todos.value = todos.value.filter((t) => t.id !== id)
+}
+
 const renderedTodos = computed(() => {
   if (hideCompleted.value) {
     return sorted.value ? filteredSortedTodos.value : filteredTodos.value
@@ -52,9 +56,12 @@ const renderedTodos = computed(() => {
     </button>
   </div>
   <ul class="todos">
-    <TodoItem v-for="todo in renderedTodos" :key="todo.id" :text="todo.text" :done="todo.done"
-      @remove="todos = todos.filter((t) => t !== todo)" @done="todo.done = !todo.done" />
+    <TodoItem v-for="todoItem in renderedTodos" v-bind="todoItem" @remove="removeTodoItem"
+      @done="todoItem.done = !todoItem.done">
+      {{ todoItem.text }}
+    </TodoItem>
   </ul>
+  <p style="font-weight: bold; border-top: 1px black solid">Total of {{ todos.length }} todo(s)</p>
 </template>
 
 <style>

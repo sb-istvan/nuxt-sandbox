@@ -23,18 +23,17 @@ const rectangleClasses = computed(() => ({
     combined: isActive.value && hasError.value,
 }))
 
-// fouth section
+// fourth section
 const cars = [
     { model: "Volkswagen", type: "Passat" },
     { model: "Renault", type: "Espace" },
     { model: "Alfa Romeo", type: "Giulietta" }
 ]
 
-const carObject = {
-    model: "Audi",
-    type: "A6 Avant",
-    color: "white",
-}
+// fifth section
+const text = ref("")
+const checkedNames = ref([])
+const pickedName = ref("")
 
 </script>
 
@@ -50,7 +49,6 @@ const carObject = {
             <button @click="switchColor">Switch color</button>
         </section>
         <section v-bind="borderBlueDotted">
-            <p>Disable counter button</p>
             <label><input type="checkbox" v-model="isButtonEnabled">
                 <button :disabled="!isButtonEnabled" @click="count++">
                     Clicked {{ count }} times
@@ -77,9 +75,29 @@ const carObject = {
             <ul class="cars">
                 <li v-for="({ model, type }, index) in cars">[{{ index }}] {{ model }} {{ type }}</li>
             </ul>
-            <ul class="cars">
-                <li v-for="(value, key, index) in carObject">{{ index }} - {{ key }} - {{ value }}</li>
-            </ul>
+        </section>
+        <section id="fifth">
+            <h3 style="white-space: pre-line;">Form input bindings {{ text }}</h3>
+            <textarea v-model="text" placeholder="Type something" />
+            <button @click="console.log($event.target)">OK</button>
+            <div>
+                <input type="checkbox" id="jack" value="Jack" v-model="checkedNames">
+                <label for="jack">Jack</label>
+            </div>
+            <div>
+                <input type="checkbox" id="john" value="John" v-model="checkedNames">
+                <label for="john">John</label>
+            </div>
+            <div>
+                <input type="checkbox" id="mike" value="Mike" v-model="checkedNames">
+                <label for="mike">Mike</label>
+            </div>
+            <div>Picked name: {{ pickedName }}</div>
+            <select v-model="pickedName">
+                <option disabled value="">Select one name</option>
+                <option v-for="name in checkedNames">{{ name }}</option>
+            </select>
+
         </section>
     </div>
 </template>
